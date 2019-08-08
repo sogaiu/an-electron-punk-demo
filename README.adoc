@@ -2,6 +2,20 @@
 
 This project provides pieces and instructions for testing communication between a running Clojure project (JVM, CLR, or Arcadia / Unity) and a https://github.com/Lokeh/punk[punk] UI (REBL-like functionality) running in an Electron app.
 
+N.B. This repository uses git submodules so proper cloning might consist of:
+
+```
+git clone --recursive https://github.com/sogaiu/an-electron-punk-demo
+```
+
+or:
+
+```
+git clone https://github.com/sogaiu/an-electron-punk-demo
+cd an-electron-punk-demo
+git submodule update --init --recursive
+```
+
 == Overview
 
 Preparation consists of:
