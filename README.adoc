@@ -68,7 +68,7 @@ In either case, ensure the Clojure project and the covalent directory are siblin
 
 Choose a copy of an Arcadia / Unity project, and ensure the 3 subdirectories of covalent/src (i.e. covalent, frame, and punk) are copied as subdirectories of the Assets subdirectory of the Unity project directory.
 
-The Arcadia / Unity project needs to be one that contains a clojure-clr that has datafy, nav, and tap> -- this demo repository contains an Arcadia directory that has been suitably prepared.  Replace the existing Arcadia subdirectory (you are working on a copy of your Unity project, right?) of the Unity project directory with a copy of the Arcadia directory in this repository.
+The Arcadia / Unity project needs to be one that contains a clojure-clr that has datafy, nav, and tap> -- this demo repository contains an Arcadia directory that has been suitably prepared.  Replace the existing Arcadia subdirectory (you are working on a copy of your Unity project, right?) within the Unity project's Assets subdirectory with a copy of the Arcadia directory in this repository.
 
 === Trying It Out
 
