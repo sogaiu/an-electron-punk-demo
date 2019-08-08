@@ -140,8 +140,11 @@ Thanks to (at least) the following folks:
 * dmiller
 * kajism
 * Lokeh
+* mauricioszabo
+* nasser
 * Saikyun
 * seancorfield
 * stuarthalloway
 * theophilusx
 * thheller
+* timsgardner
