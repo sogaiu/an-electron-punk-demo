@@ -1,0 +1,12 @@
+[submodule "covalent"]
+	path = covalent
+	url = https://github.com/sogaiu/covalent
+[submodule "Arcadia"]
+	path = Arcadia
+	url = https://github.com/sogaiu/Arcadia
+[submodule "shadow-cljs-electron-react"]
+	path = shadow-cljs-electron-react
+	url = https://github.com/sogaiu/shadow-cljs-electron-react
+[submodule "punk"]
+	path = punk
+	url = https://github.com/sogaiu/punk
