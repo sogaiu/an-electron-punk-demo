@@ -57,6 +57,12 @@ nc 127.0.0.1 1338
 then send the following:
 +
 ----
+WzplbnRyeSAwIHs6dmFsdWUgezphIDEgOmIgMn0gOm1ldGEgbmlsfV0=
+----
++
+which is the following in base64 encoding:
++
+----
 [:entry 0 {:value {:a 1 :b 2} :meta nil}]
 ----
 +
