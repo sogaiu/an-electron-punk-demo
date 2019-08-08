@@ -1,0 +1,147 @@
+= An Electron Punk Demo
+
+This project provides pieces and instructions for testing communication between a running Clojure project (JVM, CLR, or Arcadia / Unity) and a https://github.com/Lokeh/punk[punk] UI (REBL-like functionality) running in an Electron app.
+
+== Overview
+
+Preparation consists of:
+
+1. Building and starting the Electron app
+
+2. Selection and preparation of a Clojure project (JVM, CLR, or Arcadia)
+
+3. Starting the Clojure project, connecting to the Electron app and interacting
+
+=== Electron Punk App Preparation
+
+1. Build the Electron app:
++
+----
+cd shadow-cljs-electron-react
+yarn
+yarn shadow-cljs watch main renderer
+----
+2. Start the Electron app via another terminal:
++
+----
+yarn electron .
+----
+on Arch Linux or derivatives or other, might need to do:
++
+----
+yarn electron . --no-sandbox
+----
++
+The Electron app should appear on screen and be listening on tcp port 1338.
+
+3. Verify it's working by first connecting via nc, telnet, or the like:
++
+----
+nc 127.0.0.1 1338
+----
++
+then send the following:
++
+----
+[:entry 0 {:value {:a 1 :b 2} :meta nil}]
+----
++
+If all went well, the map {:a 1 :b 2} should be examinable in the Electron app
+
+=== Select and prepare a Clojure project
+
+==== JVM Clojure
+
+Choose a JVM Clojure project to test with, copy it into the directory containing this file, and add the following to its deps.edn (in the :deps section):
+
+```
+covalent {:local/root "../covalent" :deps/manifest :deps}
+```
+
+==== CLR Clojure
+
+Choose a CLR Clojure project to test with, and from the covalent/src directory, copy the 3 subdirectories (covalent, frame, and punk) to a directory containing 1 or more directories that will end up in the project's CLOJURE_LOAD_PATH.
+
+In either case, ensure the Clojure project and the covalent directory are sibling directories.
+
+==== Arcadia
+
+Choose a copy of an Arcadia / Unity project, and ensure the 3 subdirectories of covalent/src (i.e. covalent, frame, and punk) are copied as subdirectories of the Assets subdirectory of the Unity project directory.
+
+The Arcadia / Unity project needs to be one that contains a clojure-clr that has datafy, nav, and tap> -- this demo repository contains an Arcadia directory that has been suitably prepared.  Replace the existing Arcadia subdirectory (you are working on a copy of your Unity project, right?) of the Unity project directory with a copy of the Arcadia directory in this repository.
+
+=== Trying It Out
+
+Using a socket repl will likely be less problematic for the following, so start a socket repl for the Clojure project and establish a connection to it.
+
+==== JVM Clojure
+
+I'll assume this is well-understood, but if not, consider using an alias in deps.edn like that provided by seancorfield's https://github.com/seancorfield/dot-clojure[dot-clojure] (specifically, see :socket).
+
+==== CLR Clojure
+
+In a *nix-like environment, try:
+
+```
+Clojure.Main.exe \
+  -e "(do (require 'clojure.core.server) \
+        (clojure.core.server/start-server \
+          {:name \"socket-repl\" \
+           :port 8991 \
+           :accept 'clojure.main/repl \
+           :address \"localhost\"}))" \
+  -r
+```
+
+That should result in a socket repl listening on port 8991.  The host may be ::1 or 127.0.0.1 depending on your platform.
+
+==== Arcadia
+
+Start your Arcadia project in Unity and connect to its socket repl.  The host might be ::1 or 127.0.0.1, but the port is likely 37220.
+
+==== Interacting
+
+Now that the socket repl is running, connect to it using nc, telnet, etc.
+
+Then at the networked repl:
+
+----
+;; preliminaries
+(require '[covalent.core :as cc])
+(in-ns 'covalent.core)
+
+;; convenience function for set up
+(def conn
+  (start-punk "127.0.0.1" 1338))
+
+;; try sending a value to the electron app for viewing in punk.ui
+(tap> {:a 1 :b 2})
+
+;; now take a look at the electron app and start clicking a bit :)
+
+;; other things to try:
+(tap> #{:ant :bee :fox :elephant})
+(tap> [2 3 5 7 9])
+(tap> (atom {:bag #{:pencil :notepad :water-bottle}
+             :position :standing
+             :mind [:tune :chatter]}))
+(tap> (Exception. "i am an exception"))
+
+;; things known to cause problems:
+(tap> *ns*)
+(tap> #'tcp-connect)
+----
+
+== Acknowledgments
+
+Thanks to (at least) the following folks:
+
+* darwin
+* dmiller
+* kajism
+* Lokeh
+* Saikyun
+* seancorfield
+* stuarthalloway
+* theophilusx
+* thheller
