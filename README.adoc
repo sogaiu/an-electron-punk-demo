@@ -132,6 +132,10 @@ Then at the networked repl:
 (tap> #'tcp-connect)
 ----
 
+== Limitations
+
+Unlike REBL, punk's UI has no direct access to the values in the running Clojure project.  At the moment, only values (or datafied versions) that can survive serializing / deserializing are handled.
+
 == Acknowledgments
 
 Thanks to (at least) the following folks:
