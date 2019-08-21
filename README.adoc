@@ -127,8 +127,8 @@ Then at the networked repl:
 
 ----
 ;; preliminaries
-(require '[covalent.core :as cc])
-(in-ns 'covalent.core)
+(require '[covalent.tcp :as ct])
+(in-ns 'covalent.tcp)
 
 ;; convenience function for set up
 (def conn
@@ -149,7 +149,7 @@ Then at the networked repl:
 
 ;; things known to cause problems:
 (tap> *ns*)
-(tap> #'tcp-connect)
+(tap> #'start-punk)
 ----
 
 == Limitations
